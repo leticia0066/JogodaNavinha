@@ -40,9 +40,12 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Mover();
-
         Atirar();
     }
+
+    // =========================================================
+    // MOVIMENTO
+    // =========================================================
 
     private void Mover()
     {
@@ -67,20 +70,35 @@ public class PlayerController : MonoBehaviour
 
         Vector3 posicao = transform.position;
 
-        posicao.x = Mathf.Clamp(posicao.x, limiteXMin, limiteXMax);
-        posicao.y = Mathf.Clamp(posicao.y, limiteYMin, limiteYMax);
+        posicao.x = Mathf.Clamp(
+            posicao.x,
+            limiteXMin,
+            limiteXMax
+        );
+
+        posicao.y = Mathf.Clamp(
+            posicao.y,
+            limiteYMin,
+            limiteYMax
+        );
 
         transform.position = posicao;
     }
+
+    // =========================================================
+    // TIRO
+    // =========================================================
 
     private void Atirar()
     {
         if (Keyboard.current == null)
             return;
 
+        // Espaço não está pressionado
         if (!Keyboard.current.spaceKey.isPressed)
             return;
 
+        // Ainda não passou o intervalo entre tiros
         if (Time.time < tempoUltimoTiro + intervaloTiro)
             return;
 
@@ -98,6 +116,10 @@ public class PlayerController : MonoBehaviour
             scriptBala.DefinirPool(bulletPool);
         }
     }
+
+    // =========================================================
+    // OBJECT POOL
+    // =========================================================
 
     private GameObject CriarBala()
     {

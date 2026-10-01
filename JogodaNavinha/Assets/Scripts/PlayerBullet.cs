@@ -6,6 +6,9 @@ public class PlayerBullet : MonoBehaviour
     [Header("Configuração")]
     [SerializeField] private float velocidade = 12f;
 
+    [Header("Dano")]
+    [SerializeField] private int dano = 10;
+
     [Header("Limites")]
     [SerializeField] private float limiteX = 10f;
 
@@ -42,6 +45,13 @@ public class PlayerBullet : MonoBehaviour
     {
         if (other.CompareTag("Boss"))
         {
+            BossController boss = other.GetComponent<BossController>();
+
+            if (boss != null)
+            {
+                boss.ReceberDano(dano);
+            }
+
             DevolverParaPool();
         }
     }
